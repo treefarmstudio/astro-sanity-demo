@@ -1,0 +1,57 @@
+---
+import {getAllPosts} from '../sanity/api.js';
+import { urlForImage } from '../sanity/urlForImage.js';
+
+const posts = await getAllPosts();
+---
+
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="generator" content={Astro.generator} />
+		<title>Astro</title>
+    <style>
+      body {
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Ubuntu, "Helvetica Neue", sans-serif;
+      }
+      main {
+        margin: 0 auto;
+        max-width: 900px;
+      }
+      ul {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+      ul li {
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 1rem;
+      }
+      ul li a {
+        text-decoration: none;
+        color: inherit;
+      }
+      ul li a:hover {
+        text-decoration: underline;
+      }
+    </style>
+	</head>
+	<body>
+		<main>
+      <h1>Posts</h1>
+      <ul>
+        {posts.map(post => (
+          <li>
+            <a href={`/posts/${post.slug.current}`}>
+            <img src={urlForImage(post.mainImage).url()} width="300px" />
+            {post.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </main>
+	</body>
+</html>
